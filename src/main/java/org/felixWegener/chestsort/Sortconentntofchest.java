@@ -46,14 +46,14 @@ public class Sortconentntofchest {
         return false;
     }
 
-    public static boolean moveItemStacksToChest(PlayerEntity player, ServerWorld serverworld) {
+    public static List<ItemStack> moveItemStacksToChest(PlayerEntity player, ServerWorld serverworld) {
         Inventory inventory = player.getInventory();
         EnderChestInventory enderChest = player.getEnderChestInventory();
 
         List<BlockEntity> blocks = getAllBlocks(player, serverworld);
         List<ChestBlockEntity> chests = getAllChestInChunk(blocks);
 
-        boolean anyMoved = false;
+        List<ItemStack> movedItems = new ArrayList<>();
 
         for (int i = 0; i < inventory.size(); i++) {
             ItemStack playerStack = inventory.getStack(i);
@@ -73,7 +73,7 @@ public class Sortconentntofchest {
                         if (transferable > 0) {
                             enderChestStack.increment(transferable);
                             playerStack.decrement(transferable);
-                            anyMoved = true;
+                            movedItems.add(enderChestStack);
                         }
                     }
                 }
@@ -93,7 +93,7 @@ public class Sortconentntofchest {
                         if (transferable > 0) {
                             chestStack.increment(transferable);
                             playerStack.decrement(transferable);
-                            anyMoved = true;
+                            movedItems.add(chestStack);
                         }
                     }
 
@@ -110,7 +110,7 @@ public class Sortconentntofchest {
             inventory.setStack(i, playerStack);
         }
 
-        return anyMoved;
+        return movedItems;
     }
     
 }
