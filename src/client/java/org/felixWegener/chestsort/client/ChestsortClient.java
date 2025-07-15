@@ -5,8 +5,6 @@ import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.ChestBlockEntity;
 import net.minecraft.client.world.ClientWorld;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -21,7 +19,7 @@ public class ChestsortClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             if (client.player != null && client.getServer() != null) {
                 ClientWorld clientWorld = client.world;
-                World world = client.player.getEntityWorld();
+                World world = client.player.getWorld();
 
                 List<BlockPos> chests = ChestScanner.scanForChests(clientWorld, client.player);
 
